@@ -3,17 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Music EQ</title>
-  <!--link rel="icon" href="/favicon.ico">
-                  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-                  <link rel="apple-touch-icon" href="/apple-touch-icon.png"-->
-
+  <title>Music</title>
   <link rel="stylesheet" href="css/style.css">
-
 </head>
-
 <body>
-
-  <script src="js/script.js"></script>
-</body>
+  <script src="ext-lib/pure-knob/pureknob.js"></script>
+    <div class="container" id="container">
+      <div id="canvas"></div>
+      <div id="eq" class="eq">
+        <div id="shelf">
+          <div id="eq_1">
+            <span>Low Shelf</span><br>
+          </div>
+          <div id="eq_2">
+            <span>High Shelf</span><br>
+          </div>
+        </div>
+        <br>
+        <div id="player" class="player">
+        <input id="audioFile" type="file" accept="Audio/*" hidden />
+        <label class="label" for="audioFile">Upload</label>
+      </div>
+        <div id="bands">
+          <div id="eq_3">
+            <span>Band 1</span><br>
+          </div>
+          <div id="eq_4">
+            <span>Band 2</span><br>
+          </div>
+        </div>
+        <br>
+        <div id="compressor">
+          <div id="ratio">
+            <span>Ratio</span><br>
+          </div>
+          <div id="threshold">
+            <span>Threshold</span><br>
+          </div>
+          <div id="gain">
+            <span>Gain</span><br>
+          </div>
+          <div id="attack">
+            <span>Attack</span><br>
+          </div>
+          <div id="knee">
+            <span>Knee</span><br>
+          </div>
+          <div id="release">
+            <span>Release</span><br>
+          </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
 </html>

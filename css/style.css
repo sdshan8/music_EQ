@@ -1,0 +1,58 @@
+html, body {
+  font-family: Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+  background: #000;
+}
+.player {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 0 10px 0;
+}
+.container {
+  padding: 0;
+  margin: 0;
+  height: 90%;
+}
+button {
+  background-color: rgb(50,120,200);
+  border: none;
+  color: white;
+  padding: 5px 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.label {
+  background: rgb(20,120,200);
+  color: white;
+  cursor: pointer;
+  padding: 5px 6px;
+}
+.eq {
+  width: 100% - 10px;
+  display: grid;
+  grid-template-rows: auto auto;
+  padding: 5px;
+  text-align: center;
+}
+span {
+  color: #fff;
+}
+#shelf {
+  display: flex;
+  justify-content: center;
+}
+#bands {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#compressor {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+}

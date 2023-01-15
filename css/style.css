@@ -7,15 +7,18 @@ html, body {
 .player {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  margin-top: 10px;
   padding: 0 0 10px 0;
 }
 .container {
   padding: 0;
   margin: 0;
-  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
-button {
+button, .label {
   background-color: rgb(50,120,200);
   border: none;
   color: white;
@@ -24,12 +27,8 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-}
-.label {
-  background: rgb(20,120,200);
-  color: white;
-  cursor: pointer;
-  padding: 5px 6px;
+  align-items: center;
+  align-content: center;
 }
 .eq {
   width: 100% - 10px;
@@ -50,9 +49,9 @@ span {
   display: flex;
   justify-content: center;
 }
-#compressor {
+#con_ch {
   width: 100%;
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
 }

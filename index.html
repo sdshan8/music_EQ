@@ -8,52 +8,37 @@
 </head>
 <body>
   <script src="ext-lib/pure-knob/pureknob.js"></script>
-    <div class="container" id="container">
-      <div id="canvas"></div>
-      <div id="eq" class="eq">
-        <div id="shelf">
-          <div id="eq_1">
-            <span>Low Shelf</span><br>
-          </div>
-          <div id="eq_2">
-            <span>High Shelf</span><br>
-          </div>
+  <div class="container" id="container">
+    <div id="canvas"></div>
+    <div id="eq" class="eq">
+      <div id="shelf">
+        <div id="eq_1">
+          <span>Low Shelf</span><br>
         </div>
-        <br>
-        <div id="player" class="player">
-        <input id="audioFile" type="file" accept="Audio/*" hidden />
-        <label class="label" for="audioFile">Upload</label>
+        <div id="eq_2">
+          <span>High Shelf</span><br>
+        </div>
       </div>
-        <div id="bands">
-          <div id="eq_3">
-            <span>Band 1</span><br>
-          </div>
-          <div id="eq_4">
-            <span>Band 2</span><br>
-          </div>
+      <div id="bands">
+        <div id="eq_3">
+          <span>Band 1</span><br>
         </div>
-        <br>
-        <div id="compressor">
-          <div id="ratio">
-            <span>Ratio</span><br>
-          </div>
-          <div id="threshold">
-            <span>Threshold</span><br>
-          </div>
-          <div id="gain">
-            <span>Gain</span><br>
-          </div>
-          <div id="attack">
-            <span>Attack</span><br>
-          </div>
-          <div id="knee">
-            <span>Knee</span><br>
-          </div>
-          <div id="release">
-            <span>Release</span><br>
-          </div>
+        <div id="eq_4">
+          <span>Band 2</span><br>
         </div>
+      </div>
+      <div id="compressor">
+        <span>Compressor</span><
+        <div id="con_ch">
+        </div>
+      </div>
     </div>
-    <script src="js/script.js"></script>
-  </body>
+    <div id="player" class="player">
+        <audio id="audioplayer"></audio>
+      <input type="file" accept="Audio/*" hidden id="audioFile" />
+      <label class="label" for="audioFile"><span style="margin:auto">Upload</span></label>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
 </html>

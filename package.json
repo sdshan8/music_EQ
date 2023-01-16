@@ -1,0 +1,23 @@
+{
+  "name": "music_eq",
+  "version": "1.0.0",
+  "description": "A simple Equalizer and Compressor, I made to learn Web Audio API. it's not perfect in any shape or form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdshan8/music_EQ.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdshan8/music_EQ/issues"
+  },
+  "homepage": "https://github.com/sdshan8/music_EQ#readme",
+  "dependencies": {
+    "pure-knob": "github:andrepxx/pure-knob"
+  }
+}

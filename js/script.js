@@ -199,25 +199,32 @@ playButton.addEventListener("click", () => {
     if (audioctx.state === 'suspended') {
       audioctx.resume();
     }
-    if (playButton.dataset.playing === 'false') {
+    if (playButton.dataset.playing == "false") {
       audio.play();
-      playButton.dataset.playing = 'true';
-      playButton.innerText = "Pause";
       if (usermedia) {
         microphone.disconnect(band_1);
         source.connect(band_1);
         usermedia = false;
       }
-    } else if (playButton.dataset.playing === 'true') {
+    } else {
       audio.pause();
-      playButton.dataset.playing = 'false';
-      playButton.innerText = "Play";
     }
   }
   catch(err) {
     alert(JSON.stringify(err));
     console.log(err);
   }
+});
+audio.addEventListener("play", ()=>{
+  playButton.dataset.playing = "true";
+});
+audio.addEventListener("pause", ()=>{
+  playButton.dataset.playing = "false";
+  playButton.innerText = "Play";
+});
+audio.addEventListener("ended", ()=>{
+  playButton.dataset.playing = "false";
+  playButton.innerText = "Play";
 });
 
 //mic Button
@@ -227,8 +234,6 @@ micButton.addEventListener("click", () => {
   if (!usermedia) {
     if (playButton.dataset.playing === 'true') {
       audio.pause();
-      playButton.dataset.playing = 'false';
-      playButton.innerText = "Play";
     }
     setupMic();
   }

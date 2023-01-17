@@ -10,7 +10,8 @@ html, body {
 :root {
   --bg: black;
   --bg-panel: #012;
-  --accent: #3272c8;
+  --accent: #7272c8;
+  --accent-non: #3272c8;
   --text: white;
   --border-radius: 7px;
 }
@@ -52,6 +53,9 @@ button, .label {
   align-self: center;
   color: var(--text);
   border-radius: var(--border-radius);
+}
+button[data-playing = "true"] {
+  
 }
 .eq {
   width: 100% - 10px;

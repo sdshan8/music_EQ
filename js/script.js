@@ -34,7 +34,7 @@ let band_4 = new BiquadFilterNode(audioctx, {
 let comp = new DynamicsCompressorNode(audioctx, {
   ratio: 1,
 })
-
+audio.volume = 0.7
 
 source.connect(band_1);
 band_1.connect(band_2);
@@ -44,11 +44,6 @@ band_4.connect(comp);
 comp.connect(audioctx.destination);
 
 //Functions
-function updateCanvasDimensions(id) {
-  id.width = Math.min(window.innerWidth, window.innerHeight);
-  id.height = id.width / 6  * 3;
-}
-updateCanvasDimensions(visualiser);
 function map_range(value, low1, high1, low2, high2) {
   return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }
@@ -327,17 +322,19 @@ function setupfreq(id) {
 
 
 //knobs defaults
-let size_knob = 80;
+let size_knob = 65;
 let size_a_knob = 65;
 let size_b_knob = 55;
-let size_co_1_knob = 65;
-let size_co_2_knob = 60;
-let size_co_3_knob = 56;
+let size_co_1_knob = 55;
+let size_co_2_knob = 55;
+let size_co_3_knob = 55;
+let vol_knob = 80;
 let band_1_col = "#88ff88";
 let band_2_col = "#ff8888";
 let band_3_col = "#88ccff";
 let band_4_col = "#ffcc88";
-let band_5_col = "#fff";
+let band_5_col = "#8888ff";
+let vol_col = "#fff";
 
 
 //Band 1
@@ -477,6 +474,14 @@ let Threslistener = function(compThres, value) {
 };
 compThres.addListener(Threslistener);
 
+let vol = pureknob.createKnob(vol_knob, vol_knob);
+newKnobSetup(vol, "Vol", vol_col, 0, 100, (audio.volume*100));
+let vol_node = vol.node();
+let listener11 = function(vol, value) {
+  audio.volume = value/100;
+};
+vol.addListener(listener11);
+
 //elements
 let player_div = document.getElementById("player");
 let eq_div_1 = document.getElementById("eq_1");
@@ -484,6 +489,9 @@ let eq_div_2 = document.getElementById("eq_2");
 let eq_div_3 = document.getElementById("eq_3");
 let eq_div_4 = document.getElementById("eq_4");
 let comp_div = document.getElementById("con_ch");
+let vol_div = document.getElementById("vol");
+
+
 
 // appending stuff
 eq_div_1.appendChild(fre_1_node);
@@ -496,11 +504,12 @@ eq_div_3.appendChild(q_3_node);
 eq_div_4.appendChild(gain_4_node);
 eq_div_4.appendChild(fre_4_node);
 eq_div_4.appendChild(q_4_node);
-comp_div.appendChild(compAttackNode);
-comp_div.appendChild(compThresNode);
 comp_div.appendChild(compRatioNode);
+comp_div.appendChild(compThresNode);
 comp_div.appendChild(compKneeNode);
+comp_div.appendChild(compAttackNode);
 comp_div.appendChild(compReleaseNode);
+vol_div.appendChild(vol_node);
 
 
 player_div.appendChild(playButton);

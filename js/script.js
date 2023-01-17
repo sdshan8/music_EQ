@@ -1,46 +1,41 @@
 //constant
-const audioctx = new AudioContext();
+const audioctx = new AudioContext({
+  sampleRate: 44100,
+});
 const audio = document.getElementById('audioplayer');
-const source = audioctx.createMediaElementSource(audio);
+const source = new MediaElementAudioSourceNode(audioctx, {
+  mediaElement: audio,
+})
 //creating variables
-let microphone, usermedia;
-let visualiser, visualiserctx, count, vu_col;
-let band_1, band_2, band_3, band_4, comp;
-//defining variables
-usermedia = false;
-vu_col = 'rgba(50,125,255,0.5)';
-visualiser = document.createElement("canvas");
-band_1 = audioctx.createBiquadFilter();
-band_2 = audioctx.createBiquadFilter();
-band_3 = audioctx.createBiquadFilter();
-band_4 = audioctx.createBiquadFilter();
-comp = new DynamicsCompressorNode(audioctx);
+let microphone, count;
+let micbtn = false;
+let usermedia = false;
+let vu_col = 'rgba(50,125,255,0.5)';
+let visualiser = document.createElement("canvas");
+let visualiserctx = visualiser.getContext("2d");
+let band_1 = new BiquadFilterNode(audioctx, {
+  type: "lowshelf",
+  frequency: 100,
+});
+let band_2 = new BiquadFilterNode(audioctx, {
+  type: "highshelf",
+  frequency: 10000,
+});
+let band_3 = new BiquadFilterNode(audioctx, {
+  type: "peaking",
+  frequency: 250,
+  q: 0.7,
+});
+let band_4 = new BiquadFilterNode(audioctx, {
+  type: "peaking",
+  frequency: 5000,
+  q: 0.7,
+});
+let comp = new DynamicsCompressorNode(audioctx, {
+  ratio: 1,
+})
 
 
-//setting default values
-//audio-loop
-audio.loop = false;
-//eq-bands
-//lowshelf
-band_1.type = "lowshelf";
-band_1.frequency.value = 100;
-band_1.gain.value = 0;
-//highshelf
-band_2.type = "highshelf";
-band_2.frequency.value = 10000;
-band_2.gain.value = 0;
-//low-mids
-band_3.type = "peaking";
-band_3.frequency.value = 250;
-band_3.Q.value = 0.7;
-band_3.gain.value = 0;
-//high-mids
-band_4.type = "peaking";
-band_4.frequency.value = 5000;
-band_4.Q.value = 0.7;
-band_4.gain.value = 0;
-
-// connections
 source.connect(band_1);
 band_1.connect(band_2);
 band_2.connect(band_3);
@@ -48,7 +43,7 @@ band_3.connect(band_4);
 band_4.connect(comp);
 comp.connect(audioctx.destination);
 
-//Canvas
+//Functions
 function updateCanvasDimensions(id) {
   id.width = Math.min(window.innerWidth, window.innerHeight);
   id.height = id.width / 6  * 3;
@@ -57,43 +52,29 @@ updateCanvasDimensions(visualiser);
 function map_range(value, low1, high1, low2, high2) {
   return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }
-
-
 function setupMic() {
   if (!navigator.mediaDevices.getUserMedia) {
     alert("Update your Browser ");
-    console.log('Update your Browser');
     return;
   }
   navigator.mediaDevices.getUserMedia({
     audio: true, video: false
-  })
-  .then(function(stream) {
+  }).then(function(stream) {
     usermedia = true;
-    microphone = audioctx.createMediaStreamSource(stream);
+    microphone = new MediaStreamAudioSourceNode(audioctx, {
+      mediaStream : stream,
+    });
     source.disconnect(band_1);
     microphone.connect(band_1);
     if (audioctx.state === 'suspended') {
       audioctx.resume();
     }
-  })
-  .catch(function(err) {
+  }).catch(function(err) {
     alert("Is the mic plugged in?");
     console.log(err);
   });
 }
-
-visualiserctx = visualiser.getContext("2d");
-visualiserctx.clearRect(0,
-  0,
-  visualiser.width,
-  visualiser.height);
-function log_range(value, low1, high1, low2, high2) {
-  let lowlog = Math.log(low2);
-  let highlog = Math.log(high2);
-  let sccc = (highlog-lowlog) / (high1-low1);
-  return Math.round(Math.exp(lowlog + sccc*(value-low1)));
-}
+visualiserctx.clearRect(0, 0, visualiser.width, visualiser.height);
 function draw() {
   const drawVisual = requestAnimationFrame(draw);
   let grd = visualiserctx.createRadialGradient((visualiser.width/2),
@@ -238,7 +219,7 @@ playButton.addEventListener("click", () => {
     }
   }
   catch(err) {
-    alert(err);
+    alert(JSON.stringify(err));
     console.log(err);
   }
 });
@@ -273,13 +254,6 @@ loopButton.addEventListener("click", () => {
     loopButton.innerText = "Loop";
   }
 });
-
-//log button
-const logButton = document.createElement("button");
-logButton.innerText = "Log";
-logButton.addEventListener("click", () => {
-  console.log(band_3.Q.value);
-})
 
 //functions
 function newLog(position) {
@@ -530,7 +504,8 @@ comp_div.appendChild(compKneeNode);
 comp_div.appendChild(compReleaseNode);
 
 
-//player_div.appendChild(logButton);
-//player_div.appendChild(micButton);
 player_div.appendChild(playButton);
+if(micbtn) {
+  player_div.appendChild(micButton);
+}
 player_div.appendChild(loopButton);

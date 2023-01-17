@@ -44,11 +44,6 @@ band_4.connect(comp);
 comp.connect(audioctx.destination);
 
 //Functions
-function updateCanvasDimensions(id) {
-  id.width = Math.min(window.innerWidth, window.innerHeight);
-  id.height = id.width / 6  * 3;
-}
-updateCanvasDimensions(visualiser);
 function map_range(value, low1, high1, low2, high2) {
   return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }

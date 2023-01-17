@@ -217,6 +217,7 @@ playButton.addEventListener("click", () => {
 });
 audio.addEventListener("play", ()=>{
   playButton.dataset.playing = "true";
+  playButton.innerText = "Pause";
 });
 audio.addEventListener("pause", ()=>{
   playButton.dataset.playing = "false";

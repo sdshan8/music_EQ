@@ -11,7 +11,7 @@ let microphone, count;
 let micbtn = false;
 let usermedia = false;
 let vu_col = 'rgba(50,125,255,0.5)';
-let visualiser = document.createElement("canvas");
+let visualiser = document.getElementById("canvas_e");
 let visualiserctx = visualiser.getContext("2d");
 let band_1 = new BiquadFilterNode(audioctx, {
   type: "lowshelf",
@@ -74,8 +74,9 @@ function setupMic() {
     console.log(err);
   });
 }
-visualiserctx.clearRect(0, 0, visualiser.width, visualiser.height);
+
 function draw() {
+  visualiserctx.clearRect(0, 0, visualiser.width, visualiser.height);
   const drawVisual = requestAnimationFrame(draw);
   let grd = visualiserctx.createRadialGradient((visualiser.width/2),
     (visualiser.height),
@@ -181,8 +182,8 @@ draw();
 //var
 let minp = 1;
 let maxp = 100000;
-let minv = Math.log(20);
-let maxv = Math.log(22050);
+let minv = Math.log2(20);
+let maxv = Math.log2(22050);
 let scale = (maxv-minv) / (maxp-minp);
 
 //upload
@@ -257,10 +258,10 @@ loopButton.addEventListener("click", () => {
 
 //functions
 function newLog(position) {
-  return Math.round(Math.exp(minv + scale*(position-minp)));
+  return Math.round(2 ** (minv + scale*(position-minp)));
 }
 function newUnlog(value) {
-  return Math.round((Math.log(value)-minv) / scale + minp);
+  return Math.round((Math.log2(value)-minv) / scale + minp);
 }
 function newKnobSetup(id, label, color, min, max, defaultValue) {
   id.setProperty('angleStart',
@@ -313,13 +314,13 @@ function setupQ(id) {
 function setupfreq(id) {
   id.setProperty('fnValueToString',
     function(value) {
-      let sss = Math.round(Math.exp(minv + scale*(value-minp)));
+      let sss = Math.round(2 ** (minv + scale*(value-minp)));
       return sss.toString();
     });
   id.setProperty('fnStringToValue',
     function(string) {
       value = parseFloat(string);
-      let vvv = (Math.log(value)-minv) / scale + minp;
+      let vvv = (Math.log2(value)-minv) / scale + minp;
       return Math.round(vvv);
     });
 }
@@ -478,7 +479,6 @@ compThres.addListener(Threslistener);
 
 //elements
 let player_div = document.getElementById("player");
-let canvas_div = document.getElementById("canvas");
 let eq_div_1 = document.getElementById("eq_1");
 let eq_div_2 = document.getElementById("eq_2");
 let eq_div_3 = document.getElementById("eq_3");
@@ -486,7 +486,6 @@ let eq_div_4 = document.getElementById("eq_4");
 let comp_div = document.getElementById("con_ch");
 
 // appending stuff
-canvas_div.appendChild(visualiser);
 eq_div_1.appendChild(fre_1_node);
 eq_div_1.appendChild(gain_1_node);
 eq_div_2.appendChild(fre_2_node);
